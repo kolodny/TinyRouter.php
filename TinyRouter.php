@@ -21,11 +21,10 @@ class TinyRouter {
 				break;
 			}
 		}
-		$result = call_user_func_array($callback, $matches);
+		$result = call_user_func_array($callback, array_slice($matches, 1));
 		if (is_callable($this->post_filter)) {
-			$result = call_user_func($this->post_filter, $result);
+			call_user_func($this->post_filter, $result);
 		}
-		return $result;
 	}
 }
 
