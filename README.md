@@ -15,8 +15,11 @@ $router = new TinyRouter(array(
     },
 ), function ($result) { echo json_encode($result); });
 $router->run();
+```
 
-//Or just 
+Or just
+
+```php
 new TinyRouter(array(
     'GET /' => function() {
         return array(1,2,3);
