@@ -2,9 +2,12 @@
 
 class TinyRouter {
 	public $routes = array();
+	protected $post_filter;
 
-	public function __construct($routes, $start_by_default = false) {
+	public function __construct($routes, $post_filter = null, $start_by_default = false) {
 		$this->routes = $routes;
+		$this->post_filter = $post_filter;
+
 		if ($start_by_default) {
 			$this->run();
 		}
@@ -18,8 +21,11 @@ class TinyRouter {
 				break;
 			}
 		}
-		$return = call_user_func_array($callback, $matches);
-		echo json_encode($return);
+		$result = call_user_func_array($callback, $matches);
+		if (is_callable($this->post_filter)) {
+			$result = call_user_func($this->post_filter, $result);
+		}
+		return $result;
 	}
 }
 

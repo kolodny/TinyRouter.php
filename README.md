@@ -13,6 +13,6 @@ $router = new TinyRouter(array(
     'GET /users/(\\d+)/' => function($id) {
         return array('user_id' => $id);
     },
-), true);
+), function ($result) { echo json_encode($result); }, true);
 ```
 
