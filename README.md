@@ -13,6 +13,10 @@ $router = new TinyRouter(array(
     'GET /users/(\\d+)/' => function($id) {
         return array('user_id' => $id);
     },
-), true);
+    'default route' => function() {
+        header('HTTP/1.1 400 Bad Request', true, 400);
+        exit;
+    }
+), function ($result) { echo json_encode($result); }, true);
 ```
 
