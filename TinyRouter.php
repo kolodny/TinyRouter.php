@@ -17,14 +17,15 @@ class TinyRouter {
 		$method = $_SERVER['REQUEST_METHOD'];
 		foreach ($this->routes as $route => $callback) {
 			list($route_method, $regex) = explode(' ', $route, 2);
-			if ($route_method === $method && preg_match("#^$regex$#", $path, $matches)) {
-				break;
+			if ($route_method === $method && preg_match("#^$regex$#", $path, $matches)) {				
+				$result = call_user_func_array($callback, array_slice($matches, 1));
+				if (is_callable($this->post_filter)) {
+					$result = call_user_func($this->post_filter, $result);
+				}
+				return $result;
 			}
 		}
-		$result = call_user_func_array($callback, array_slice($matches, 1));
-		if (is_callable($this->post_filter)) {
-			call_user_func($this->post_filter, $result);
-		}
+		
 	}
 }
 
