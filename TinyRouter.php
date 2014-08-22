@@ -12,9 +12,8 @@ class TinyRouter {
 			$this->run();
 		}
 	}
-	public function run() {
-		$path = preg_replace('#\?.*#', '', $_SERVER['REQUEST_URI']);
-		$method = $_SERVER['REQUEST_METHOD'];
+	public function run($uri, $method) {
+		$path = preg_replace('#\?.*#', '', $uri);
 		foreach ($this->routes as $route => $callback) {
 			list($route_method, $regex) = explode(' ', $route, 2);
 			if ($route_method === $method && preg_match("#^$regex$#", $path, $matches)) {				
