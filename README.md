@@ -14,7 +14,7 @@ $router = new TinyRouter(array(
         return array('user_id' => $id);
     },
 ));
-$result = $router->run(_SERVER['REQUEST_URI'], _SERVER['REQUEST_METHOD']);
+$result = $router->run($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
 echo json_encode($result);
 ```
 
@@ -30,6 +30,6 @@ new TinyRouter(array(
     },
 ), function ($result) {
     echo json_encode($result);
-}, true, _SERVER['REQUEST_URI'], _SERVER['REQUEST_METHOD']);
+}, true, $_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
 ```
 
