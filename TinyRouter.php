@@ -4,17 +4,16 @@ class TinyRouter {
 	public $routes = array();
 	protected $post_filter;
 
-	public function __construct($routes, $post_filter = null, $start_by_default = false) {
+	public function __construct($routes, $post_filter = null, $start_by_default = false, $uri, $method) {
 		$this->routes = $routes;
 		$this->post_filter = $post_filter;
 
 		if ($start_by_default) {
-			$this->run();
+			$this->run($uri, $method);
 		}
 	}
-	public function run() {
-		$path = preg_replace('#\?.*#', '', $_SERVER['REQUEST_URI']);
-		$method = $_SERVER['REQUEST_METHOD'];
+	public function run($uri, $method) {
+		$path = preg_replace('#\?.*#', '', $uri);
 		foreach ($this->routes as $route => $callback) {
 			list($route_method, $regex) = explode(' ', $route, 2);
 			if ($route_method === $method && preg_match("#^$regex$#", $path, $matches)) {				
