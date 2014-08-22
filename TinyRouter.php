@@ -4,12 +4,12 @@ class TinyRouter {
 	public $routes = array();
 	protected $post_filter;
 
-	public function __construct($routes, $post_filter = null, $start_by_default = false) {
+	public function __construct($routes, $post_filter = null, $start_by_default = false, $uri, $method) {
 		$this->routes = $routes;
 		$this->post_filter = $post_filter;
 
 		if ($start_by_default) {
-			$this->run();
+			$this->run($uri, $method);
 		}
 	}
 	public function run($uri, $method) {
